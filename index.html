@@ -1,0 +1,292 @@
+<!doctype html>
+<html lang="id">
+<head>
+  <meta charset="utf-8"/>
+  <meta name="viewport" content="width=device-width, initial-scale=1"/>
+  <title>Liberty KTV · Luxury Reservation</title>
+  <meta name="description" content="Reservasi Liberty KTV · Bar & Club. Pilih room VIP/VVIP, Table/Sofa/Sofa VIP, paket & bottle list. Open table tanpa MC, room karaoke minimum bill Rp2.000.000."/>
+  <script src="https://cdn.tailwindcss.com"></script>
+  <style>
+    :root{--gold:#f5c96b;--vio:#a78bfa;--pink:#ff7ad9;--cyan:#6ee7ff;--ink:#e5e7eb;--bg1:#05060a;--bg2:#0b0f1c}
+    html,body{height:100%;background:
+      radial-gradient(circle at 20% 0%, rgba(245,201,107,.07), transparent 40%),
+      radial-gradient(circle at 80% 100%, rgba(167,139,250,.07), transparent 45%),
+      linear-gradient(180deg,var(--bg1),var(--bg2));color:var(--ink)}
+    .orb{position:absolute;filter:blur(40px);opacity:.35;pointer-events:none;mix-blend:screen}
+    .o1{width:420px;height:420px;background:radial-gradient(circle,var(--vio),transparent 60%);left:-100px;top:-80px;animation:float1 16s ease-in-out infinite}
+    .o2{width:380px;height:380px;background:radial-gradient(circle,var(--pink),transparent 60%);right:-120px;top:30vh;animation:float2 18s ease-in-out infinite}
+    .o3{width:300px;height:300px;background:radial-gradient(circle,var(--cyan),transparent 60%);left:20vw;bottom:-120px;animation:float3 22s ease-in-out infinite}
+    @keyframes float1{50%{transform:translate(40px,24px)}}
+    @keyframes float2{50%{transform:translate(-30px,-20px)}}
+    @keyframes float3{50%{transform:translate(0,-30px)}}
+    .neon{background:linear-gradient(90deg,var(--gold),#ffd07a,var(--vio),#ffd07a);-webkit-background-clip:text;background-clip:text;color:transparent;text-shadow:0 0 20px rgba(245,201,107,.25)}
+    .neon-glow{box-shadow:0 0 0 1px rgba(255,255,255,.06),0 0 30px rgba(245,201,107,.15) inset}
+    .glass{background:rgba(255,255,255,.04);border:1px solid rgba(255,255,255,.08);backdrop-filter:blur(12px)}
+    .ab{position:relative}
+    .ab::before{content:"";position:absolute;inset:-1px;padding:1px;border-radius:16px;background:conic-gradient(from 0deg,var(--gold),var(--vio),var(--pink),var(--gold));-webkit-mask:linear-gradient(#000 0 0) content-box,linear-gradient(#000 0 0);-webkit-mask-composite:xor;mask-composite:exclude;animation:spin 10s linear infinite}
+    @keyframes spin{to{transform:rotate(360deg)}}
+    .btn{transition:transform .15s,box-shadow .15s}.btn:active{transform:scale(.98)}
+    .btn-gold{background:linear-gradient(90deg,var(--gold),#d9b45a);color:#120a00}
+    .btn-ghost:hover{background:rgba(255,255,255,.08)}
+    .tilt{transform-style:preserve-3d;transition:transform .25s,box-shadow .25s}.tilt:hover{transform:translateY(-4px) rotateX(4deg) rotateY(-3deg);box-shadow:0 20px 40px rgba(0,0,0,.35)}
+    .shine{position:relative;overflow:hidden}
+    .shine::after{content:"";position:absolute;inset:-1px;background:linear-gradient(120deg,transparent 0%,rgba(255,255,255,.12) 50%,transparent 100%);transform:skewX(-25deg);left:-120%;width:60%;animation:shine 5s infinite}
+    @keyframes shine{50%{left:120%}}
+    /* modal */
+    .modal{position:fixed;inset:0;background:rgba(0,0,0,.5);backdrop-filter:blur(3px);display:none;align-items:center;justify-content:center;z-index:50}
+    .modal.open{display:flex}
+  </style>
+</head>
+<body>
+  <div class="orb o1"></div><div class="orb o2"></div><div class="orb o3"></div>
+
+  <!-- header -->
+  <header class="max-w-6xl mx-auto px-4 py-6 flex items-center justify-between relative z-10">
+    <div class="flex items-center gap-3">
+      <img src="liberty-logo.jpg" alt="Liberty KTV" class="w-12 h-12 object-contain rounded-full neon-glow"/>
+      <div class="leading-tight">
+        <div class="text-xl tracking-[.25em] font-semibold neon">LIBERTY</div>
+        <div class="text-[11px] uppercase text-slate-300">KTV · Bar & Club</div>
+      </div>
+    </div>
+    <nav class="hidden sm:flex gap-2">
+      <a href="#rooms" class="px-3 py-2 rounded-lg glass btn-ghost">Rooms</a>
+      <a href="#packages" class="px-3 py-2 rounded-lg glass btn-ghost">Paket</a>
+      <button id="openBottles" class="px-3 py-2 rounded-lg glass btn-ghost">Bottle List</button>
+      <a href="#reserve" class="px-3 py-2 rounded-lg glass btn-ghost">Reservasi</a>
+      <a href="https://share.google/x6zAzczkYvZa80VKm" target="_blank" class="px-3 py-2 rounded-lg glass btn-ghost">Lokasi</a>
+    </nav>
+  </header>
+
+  <!-- hero -->
+  <section class="relative z-10">
+    <div class="max-w-6xl mx-auto px-4 grid md:grid-cols-2 gap-6 items-stretch">
+      <div class="glass ab rounded-2xl p-7 md:p-9 tilt">
+        <p class="text-xs tracking-widest text-slate-300">WELCOME TO</p>
+        <h1 class="text-4xl md:text-6xl font-extrabold leading-tight neon shine">
+          The Luxury Night • <span class="text-slate-100">Reservation</span>
+        </h1>
+        <p class="mt-3 text-slate-300">
+          Pilih <b>Room</b> (VIP 1–4, VVIP 1) & <b>Tempat</b> (Table/Sofa/Sofa VIP),
+          atur tanggal & jam, lalu konfirmasi via WhatsApp.
+        </p>
+        <ul class="mt-4 text-sm text-slate-300 space-y-1">
+          <li>• <b>Open Table:</b> <span class="text-[var(--gold)]">tanpa MC</span></li>
+          <li>• <b>Room Karaoke:</b> <span class="text-[var(--gold)]">minimum bill Rp2.000.000</span></li>
+        </ul>
+        <div class="flex flex-col sm:flex-row gap-3 mt-6">
+          <a href="#reserve" class="btn btn-gold px-5 py-3 rounded-xl font-semibold">Mulai Reservasi</a>
+          <a href="https://share.google/x6zAzczkYvZa80VKm" target="_blank" rel="noopener"
+             class="btn px-5 py-3 rounded-xl glass btn-ghost">Buka Google Maps</a>
+        </div>
+      </div>
+
+      <div class="grid grid-cols-2 gap-4">
+        <div class="glass ab rounded-xl p-5 text-center tilt">
+          <div class="text-xs text-slate-300">Rooms</div>
+          <div class="text-2xl font-bold text-[var(--gold)]">VIP 1–4</div>
+          <div class="text-[11px] text-slate-400 mt-1">Premium sound • private</div>
+        </div>
+        <div class="glass ab rounded-xl p-5 text-center tilt">
+          <div class="text-xs text-slate-300">Rooms</div>
+          <div class="text-2xl font-bold text-[var(--gold)]">VVIP 1</div>
+          <div class="text-[11px] text-slate-400 mt-1">Exclusive host • capacity 12+</div>
+        </div>
+        <div class="glass ab rounded-xl p-5 text-center tilt">
+          <div class="text-xs text-slate-300">Tempat</div>
+          <div class="text-xl font-bold text-[var(--gold)]">Table / Sofa</div>
+          <div class="text-[11px] text-slate-400 mt-1">Open table tanpa MC</div>
+        </div>
+        <div class="glass ab rounded-xl p-5 text-center tilt">
+          <div class="text-xs text-slate-300">Tempat</div>
+          <div class="text-xl font-bold text-[var(--gold)]">Sofa VIP</div>
+          <div class="text-[11px] text-slate-400 mt-1">Better view • bottle service</div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- rooms -->
+  <section id="rooms" class="relative z-10 max-w-6xl mx-auto px-4 mt-10">
+    <h2 class="text-2xl md:text-3xl font-semibold mb-4">Pilihan Room</h2>
+    <div class="grid sm:grid-cols-2 lg:grid-cols-3 gap-4">
+      <div class="glass ab rounded-xl p-5 tilt"><div class="flex items-center justify-between"><div class="font-semibold">VIP 1</div><span class="text-[10px] px-2 py-1 rounded-full bg-white/10">4–6 pax</span></div><p class="text-sm text-slate-300 mt-2">Private karaoke • ambient lighting.</p></div>
+      <div class="glass ab rounded-xl p-5 tilt"><div class="flex items-center justify-between"><div class="font-semibold">VIP 2</div><span class="text-[10px] px-2 py-1 rounded-full bg-white/10">6–8 pax</span></div><p class="text-sm text-slate-300 mt-2">Premium sound • comfy sofa.</p></div>
+      <div class="glass ab rounded-xl p-5 tilt"><div class="flex items-center justify-between"><div class="font-semibold">VIP 3</div><span class="text-[10px] px-2 py-1 rounded-full bg-white/10">6–8 pax</span></div><p class="text-sm text-slate-300 mt-2">Private service • neon ambience.</p></div>
+      <div class="glass ab rounded-xl p-5 tilt"><div class="flex items-center justify-between"><div class="font-semibold">VIP 4</div><span class="text-[10px] px-2 py-1 rounded-full bg-white/10">8–10 pax</span></div><p class="text-sm text-slate-300 mt-2">More space • better bass.</p></div>
+      <div class="glass ab rounded-xl p-5 tilt col-span-1 lg:col-span-2"><div class="flex items-center justify-between"><div class="font-semibold">VVIP 1</div><span class="text-[10px] px-2 py-1 rounded-full bg-white/10">10–14 pax</span></div><p class="text-sm text-slate-300 mt-2">Exclusive host • private restroom • stage corner.</p></div>
+    </div>
+  </section>
+
+  <!-- packages & price -->
+  <section id="packages" class="relative z-10 max-w-6xl mx-auto px-4 mt-10">
+    <h2 class="text-2xl md:text-3xl font-semibold mb-4">Paket & Harga</h2>
+    <div class="grid md:grid-cols-3 gap-4">
+      <div class="glass ab rounded-xl p-5 tilt">
+        <div class="text-sm text-slate-300">Open Table</div>
+        <div class="mt-1 text-[var(--gold)] font-extrabold text-2xl">Tanpa MC</div>
+        <ul class="mt-3 text-sm text-slate-300 space-y-1">
+          <li>• Table / Sofa (2–6 pax)</li>
+          <li>• Bottle list terpisah</li>
+          <li>• Free mixer basic</li>
+        </ul>
+        <button id="openBottles2" class="mt-4 btn px-4 py-2 rounded-lg glass btn-ghost">Lihat Bottle List</button>
+      </div>
+
+      <div class="glass ab rounded-xl p-5 tilt">
+        <div class="text-sm text-slate-300">Room Karaoke (VIP)</div>
+        <div class="mt-1 text-[var(--gold)] font-extrabold text-2xl">Min. Bill 2 Juta</div>
+        <ul class="mt-3 text-sm text-slate-300 space-y-1">
+          <li>• VIP 1–4 (4–10 pax)</li>
+          <li>• Premium sound & mic</li>
+          <li>• Service charge & tax berlaku</li>
+        </ul>
+      </div>
+
+      <div class="glass ab rounded-xl p-5 tilt">
+        <div class="text-sm text-slate-300">Room Karaoke (VVIP)</div>
+        <div class="mt-1 text-[var(--gold)] font-extrabold text-2xl">Best Experience</div>
+        <ul class="mt-3 text-sm text-slate-300 space-y-1">
+          <li>• VVIP 1 (10–14 pax)</li>
+          <li>• Private host & restroom</li>
+          <li>• Paket custom on request</li>
+        </ul>
+      </div>
+    </div>
+  </section>
+
+  <!-- reservation form -->
+  <section id="reserve" class="relative z-10 max-w-6xl mx-auto px-4 mt-10">
+    <div class="glass ab rounded-2xl p-6 md:p-8">
+      <h2 class="text-2xl md:text-3xl font-semibold">Reservasi Sekarang</h2>
+      <p class="text-slate-300 text-sm mt-1">Open table <b>tanpa MC</b>. Room karaoke <b>minimum bill Rp2.000.000</b>. (Operasional: Kamis–Minggu, 20.00–02.00)</p>
+
+      <form id="reserveForm" class="grid md:grid-cols-2 gap-4 mt-4">
+        <div><label class="text-sm text-slate-300">Nama</label>
+          <input id="name" class="w-full mt-1 px-3 py-2 rounded-lg bg-black/40 border border-white/10" placeholder="Nama Anda" required/>
+        </div>
+        <div><label class="text-sm text-slate-300">No. WhatsApp</label>
+          <input id="phone" type="tel" class="w-full mt-1 px-3 py-2 rounded-lg bg-black/40 border border-white/10" placeholder="08xxxxxxxxxx" required/>
+        </div>
+        <div><label class="text-sm text-slate-300">Room</label>
+          <select id="room" class="w-full mt-1 px-3 py-2 rounded-lg bg-black/40 border border-white/10">
+            <option>VIP 1</option><option>VIP 2</option><option>VIP 3</option><option>VIP 4</option><option>VVIP 1</option>
+          </select>
+        </div>
+        <div><label class="text-sm text-slate-300">Tipe Tempat</label>
+          <select id="place" class="w-full mt-1 px-3 py-2 rounded-lg bg-black/40 border border-white/10">
+            <option>Table</option><option>Sofa</option><option>Sofa VIP</option>
+          </select>
+        </div>
+        <div><label class="text-sm text-slate-300">Tanggal</label>
+          <input id="date" type="date" class="w-full mt-1 px-3 py-2 rounded-lg bg-black/40 border border-white/10" required/>
+        </div>
+        <div><label class="text-sm text-slate-300">Jam</label>
+          <input id="time" type="time" class="w-full mt-1 px-3 py-2 rounded-lg bg-black/40 border border-white/10" required/>
+        </div>
+        <div class="md:col-span-2">
+          <label class="text-sm text-slate-300">Catatan (opsional)</label>
+          <textarea id="notes" rows="3" class="w-full mt-1 px-3 py-2 rounded-lg bg-black/40 border border-white/10"
+            placeholder="Contoh: birthday setup, bottle list, request DJ/lagu, dll."></textarea>
+        </div>
+        <div class="md:col-span-2 flex flex-col sm:flex-row gap-3 mt-2">
+          <button type="submit" class="btn btn-gold px-5 py-3 rounded-xl font-semibold flex-1">Reservasi via WhatsApp</button>
+          <button type="button" id="previewBtn" class="btn px-5 py-3 rounded-xl glass btn-ghost flex-1">Preview Pesan</button>
+        </div>
+        <div class="md:col-span-2">
+          <pre id="preview" class="mt-2 whitespace-pre-wrap text-sm text-slate-300 hidden"></pre>
+          <a id="gcal" href="#" target="_blank" class="hidden inline-block mt-2 btn px-4 py-2 rounded-lg glass btn-ghost">Tambah ke Google Calendar</a>
+        </div>
+      </form>
+    </div>
+  </section>
+
+  <footer class="relative z-10 text-center text-sm text-slate-400 mt-10 mb-8">
+    © 2025 Liberty KTV · Demo — Dibuat oleh <span class="text-[var(--gold)] font-semibold">Khonsu Socials</span>
+  </footer>
+
+  <!-- Bottle List Modal -->
+  <div id="bottleModal" class="modal">
+    <div class="glass ab rounded-2xl p-6 w-[92vw] max-w-2xl">
+      <div class="flex items-center justify-between mb-2">
+        <h3 class="text-xl font-semibold">Bottle List</h3>
+        <button id="closeBottles" class="px-3 py-2 rounded-lg glass btn-ghost">Tutup</button>
+      </div>
+      <div id="bottleWrap" class="grid sm:grid-cols-2 gap-3"></div>
+      <p class="text-[12px] text-slate-400 mt-3">*Harga belum termasuk service charge & tax. Paket custom available.</p>
+    </div>
+  </div>
+
+  <script>
+    const LOUNGE_WA = "6281314604337"; // ganti jika perlu
+    const MAPS = "https://share.google/x6zAzczkYvZa80VKm";
+
+    // ===== Bottle list data =====
+    const bottles = [
+      {cat:"Whisky", items:[
+        {name:"Johnnie Walker Black", price:"Rp1.700.000"},
+        {name:"Chivas Regal 12", price:"Rp1.600.000"},
+        {name:"Jameson", price:"Rp1.400.000"},
+      ]},
+      {cat:"Vodka & Gin", items:[
+        {name:"Belvedere", price:"Rp1.800.000"},
+        {name:"Grey Goose", price:"Rp2.000.000"},
+        {name:"Tanqueray", price:"Rp1.500.000"},
+      ]},
+      {cat:"Rum & Tequila", items:[
+        {name:"Bacardi", price:"Rp1.300.000"},
+        {name:"Patrón Silver", price:"Rp2.400.000"},
+        {name:"Jose Cuervo", price:"Rp1.600.000"},
+      ]},
+      {cat:"Champagne", items:[
+        {name:"Moët & Chandon", price:"Rp3.800.000"},
+        {name:"Veuve Clicquot", price:"Rp4.200.000"}
+      ]}
+    ];
+
+    // Build bottle modal
+    const bottleWrap = document.getElementById('bottleWrap');
+    bottles.forEach(g=>{
+      const card = document.createElement('div');
+      card.className = "glass rounded-xl p-4";
+      const title = `<div class="font-semibold text-[var(--gold)] mb-2">${g.cat}</div>`;
+      const list = g.items.map(it=>`<div class="flex justify-between text-sm"><span>${it.name}</span><span class="text-slate-300">${it.price}</span></div>`).join("");
+      card.innerHTML = title + list;
+      bottleWrap.appendChild(card);
+    });
+    const bottleModal = document.getElementById('bottleModal');
+    document.getElementById('openBottles').onclick = ()=> bottleModal.classList.add('open');
+    document.getElementById('openBottles2').onclick = ()=> bottleModal.classList.add('open');
+    document.getElementById('closeBottles').onclick = ()=> bottleModal.classList.remove('open');
+    bottleModal.addEventListener('click', e=>{ if(e.target===bottleModal) bottleModal.classList.remove('open') });
+
+    // ===== Helpers =====
+    function onlyThuToSun(date){
+      // 0=Sun ... 6=Sat → Kamis(4)–Minggu(0)
+      const d = date.getDay();
+      return d===4 || d===5 || d===6 || d===0;
+    }
+    function withinHours(hhmm){
+      // 20:00–02:00 (lewat tengah malam). izinkan 20:00—23:59 atau 00:00—02:00
+      const [h,m] = hhmm.split(':').map(Number);
+      return (h>=20 && h<=23) || (h>=0 && h<=2);
+    }
+    function toCalDate(dateStr, timeStr){
+      // buat ISO UTC untuk GCal (durasi default 2 jam)
+      const [y,m,d] = dateStr.split('-').map(Number);
+      const [hh,mm] = timeStr.split(':').map(Number);
+      const start = new Date(y, m-1, d, hh, mm);
+      const end   = new Date(start.getTime() + 2*60*60*1000);
+      const fmt = (dt)=> dt.toISOString().replace(/[-:]/g,'').split('.')[0] + 'Z';
+      return {start:fmt(start), end:fmt(end)};
+    }
+
+    function buildMessage(){
+      const name  = document.getElementById('name').value.trim();
+      const phone = document.getElementById('phone').value.trim();
+      const room  = document.getElementById('room').value;
+      const place = document.getElementById('place').value;
+      const date  = document.getElementById('date').value;
+      const time  = document.getElementById('time').value;
+      const notes = document.getElementById('notes').value.trim();
+      const tgl = date ? new Date(date).toLocaleDateString('id
